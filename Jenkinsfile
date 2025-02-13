@@ -43,6 +43,7 @@ pipeline {
         success {
             mail to: 'melvinsamuel070@gmail.com',
                  subject: "SUCCESS: Pipeline Completed",
+                 body: "The pipeline has completed successfully."
         }
         failure {
             mail to: 'melvinsamuel070@gmail.com',
