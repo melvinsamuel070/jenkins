@@ -15,6 +15,7 @@ pipeline {
         stage("building") {
             steps {
                 echo "This is for the building stage"
+                error "Simulating a failure for testing"
             }
         }
 
