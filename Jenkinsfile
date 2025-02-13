@@ -30,7 +30,7 @@ pipeline {
                     BRANCH_NAME == "testing"
                 }
             }
-            steps {
+            step {
                 echo "This is for the testing stage"
             }
         }
