@@ -37,6 +37,11 @@ pipeline {
     }
 
     post {
+        always {
+            mail to: 'melvinsamuel070@gmail.com',
+                 subject: "Pipeline Completed",
+                 body: "The pipeline has completed. Check the status for more details."
+        }
         success {
             mail to: 'melvinsamuel070@gmail.com',
                  subject: "SUCCESS: Pipeline Completed",
