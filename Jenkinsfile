@@ -30,7 +30,7 @@ pipeline {
                     BRANCH_NAME == "testing"
                 }
             }
-            step {
+            steps {
                 echo "This is for the testing stage"
             }
         }
@@ -41,11 +41,13 @@ pipeline {
             echo "This will always run"
         }
         success {
+            echo "Pipeline completed successfully!"
             mail to: 'melvinsamuel070@gmail.com',
                  subject: "SUCCESS: Pipeline Completed",
                  body: "The pipeline has completed successfully."
         }
         failure {
+            echo "Pipeline failed!"
             mail to: 'melvinsamuel070@gmail.com',
                  subject: "FAILURE: Pipeline Failed",
                  body: "The pipeline has failed. Please check the logs."
