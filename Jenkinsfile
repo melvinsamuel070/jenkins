@@ -15,7 +15,6 @@ pipeline {
         stage("building") {
             steps {
                 echo "This is for the building stage"
-                error "Simulating a failure for testing"
             }
         }
 
@@ -35,23 +34,48 @@ pipeline {
                 echo "This is for the testing stage"
             }
         }
+        steps {
+            script {
+                try {
+                    sh "ssh -o -i tester.key root@123.222.33.44" 
+                    
+                } catch (error) {
+                    currentBuild.result = "FAILURE"
+                    throw err
+                }
+                    
+            }
+        }
     }
 
     post {
         always {
             echo "This will always run"
         }
-        success {
-            echo "Pipeline completed successfully!"
-            mail to: 'melvinsamuel070@gmail.com',
-                 subject: "SUCCESS: Pipeline Completed",
-                 body: "The pipeline has completed successfully."
-        }
         failure {
-            echo "Pipeline failed!"
-            mail to: 'melvinsamuel070@gmail.com',
-                 subject: "FAILURE: Pipeline Failed",
-                 body: "The pipeline has failed. Please check the logs."
+            script {
+                def build_log = Mnager.build.logs
+                emailext subject: "All FAILED",
+                         body: """
+                                this is bthe default body
+                                ${env.BUILD_URL}
+                                ----------------
+                                ${build_log}
+                                """,
+                         to: "melvinsamuel070@gmail.com"
+
+            }
         }
+        success {
+            emailext subject: "All SUCCESS",
+                         body: """
+                                this is bthe default body
+                                ${env.BUILD_URL}
+                                ----------------
+                                ${build_log}
+                                """,
+                         to: "melvinsamuel070@gmail.com"
+        }
+
     }
 }
