@@ -59,7 +59,7 @@ pipeline {
                                     ----------------
                                     ${build_log}
                                     """,
-                            to: "melvinsamuel070@gmail"
+                            to: "melvinsamuel070@gmail.com"
 
                 }
                 
@@ -73,7 +73,7 @@ pipeline {
                                 ----------------
                             
                                 """,
-                         to: "melvinsamuel070@gmail"
+                         to: "melvinsamuel070@gmail.com"
                 
             }
         }
