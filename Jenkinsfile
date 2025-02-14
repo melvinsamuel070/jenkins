@@ -7,7 +7,7 @@ pipeline {
     stages {
 
         stage("Checkout out"){
-            git "https://github.com/theoafactor/jenkins_class.git"
+            git "https://github.com/melvinsamuel070/jenkins.git"
         }
 
         stage("starting"){
@@ -59,7 +59,7 @@ pipeline {
                                     ----------------
                                     ${build_log}
                                     """,
-                            to: "theoafactor@gmail.com"
+                            to: "melvinsamuel070@gmail"
 
                 }
                 
@@ -73,7 +73,7 @@ pipeline {
                                 ----------------
                             
                                 """,
-                         to: "theoafactor@gmail.com"
+                         to: "melvinsamuel070@gmail"
                 
             }
         }
