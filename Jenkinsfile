@@ -49,7 +49,7 @@ pipeline {
       post{
             failure{
                 script {
-                    //def build_log = currentBuild.rawBuild.getLog(200).join("\n")
+                    //def build_log = currentBuild.rawBuild.getLog(200).join("\n"),
                     // def build_log = manager.build.log
                     def build_log = readFile("build.log")
                     emailext subject: "Everything FAILED",
