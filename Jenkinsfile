@@ -1,9 +1,9 @@
 
 pipeline {
     agent any
-    // tools {
-    //     nodejs "node18"
-    // }
+    tools {
+        nodejs "node18"
+    }
     stages {
 
         stage("Checkout out"){
@@ -31,7 +31,7 @@ pipeline {
                 script {
                     try {
 
-                        // sh "npm run test | tee builder.log"
+                        sh "npm run test | tee builder.log"
 
                     }catch(Exception err){
                         currentBuild.result = "FAILURE"
