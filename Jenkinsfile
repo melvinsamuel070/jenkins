@@ -53,24 +53,24 @@ pipeline {
         failure {
             script {
                 def build_log = currentBuild.rawBuild.getLog(50).join("\n")
-                emailext subject: "Build FAILED",
+                mail subject: "Build FAILED",
                          body: """
                              Build failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}
                              URL: ${env.BUILD_URL}
                              Logs:
                              ${build_log}
                          """,
-                         to: "melvinsamuel070@gmail.com"
+                      mail    to: 'melvinsamuel070@gmail.com',
             }
         }
 
         success {
-            emailext subject: "Build SUCCESS",
+            mail subject: "Build SUCCESS",
                      body: """
                          Build succeeded for ${env.JOB_NAME} #${env.BUILD_NUMBER}
                          URL: ${env.BUILD_URL}
                      """,
-                     to: "melvinsamuel070@gmail.com"
+                      mail     to: 'melvinsamuel070@gmail.com',
         }
     }
 }
