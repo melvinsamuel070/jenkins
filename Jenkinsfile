@@ -40,7 +40,7 @@
 
 //         stage("production") {
 //             steps {
-//                 echo "This is for the prduction stage"
+//                 echo "This is fo the prduction stage"
 //             }
 //         }
 //     }
