@@ -8,7 +8,7 @@ pipeline {
 
         stage("Checkout out"){
             steps{
-                git branch: "testing", 
+                git branch: "master", 
                 url: "https://github.com/melvinsamuel070/jenkins.git"
             }
         }
