@@ -27,6 +27,9 @@ pipeline {
                 }
             }
             steps{
+                 sh 'touch builder.log'  // Ensure log file exists
+                 sh 'npm install > builder.log 2>&1'
+                 sh 'npm run build >> builder.log 2>&1'
         
                 script {
                     try {
