@@ -90,7 +90,6 @@
 // }
 
 
-
 pipeline {
     agent any
     environment {
@@ -100,9 +99,11 @@ pipeline {
         nodejs 'node18'
     }
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/melvinsamuel070/jenkins.git'
+                git branch: 'master', 
+                    url: 'https://github.com/melvinsamuel070/jenkins.git'
             }
         }
 
@@ -112,22 +113,23 @@ pipeline {
             }
         }
 
-        stage('Logging to Docker') {
+        stage('Login to DockerHub') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
-                    }
+                    sh "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
                 }
             }
         }
 
         stage('Building') {
             when {
-                expression { env.BRANCH_NAME == 'testing' }
+                expression {
+                    BRANCH_NAME == 'testing'
+                }
             }
             steps {
                 sh 'docker build -t melvinsamuel070/jenkins .'
+
                 script {
                     try {
                         sh 'npm run test | tee builder.log'
@@ -151,32 +153,28 @@ pipeline {
         failure {
             script {
                 def build_log = readFile('builder.log')
-                emailext subject: 'Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
-                         body: """
-                             Build failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}:
-                             ${env.BUILD_URL}
-
-                             Logs:
-                             ----------------
-                             ${build_log}
-                         """,
-                         to: 'melvinsamuel070@gmail.com'
+                emailext subject: 'Everything FAILED',
+                    body: """
+                    This is the default body. ${env.JOB_NAME} - ${env.BUILD_NUMBER}, 
+                    ${env.BUILD_URL}
+                    ----------------
+                    ${build_log}
+                    """,
+                    to: 'melvinsamuel070@gmail.com'
             }
         }
 
         success {
             script {
                 def build_log = readFile('builder.log')
-                emailext subject: 'Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
-                         body: """
-                             Build succeeded for ${env.JOB_NAME} #${env.BUILD_NUMBER}:
-                             ${env.BUILD_URL}
-
-                             Logs:
-                             ----------------
-                             ${build_log}
-                         """,
-                         to: 'melvinsamuel070@gmail.com'
+                emailext subject: 'Everything works fine from here',
+                    body: """
+                    This is the default body. ${env.JOB_NAME} - ${env.BUILD_NUMBER}, 
+                    ${env.BUILD_URL}
+                    ----------------
+                    ${build_log}
+                    """,
+                    to: 'melvinsamuel070@gmail.com'
             }
         }
     }
