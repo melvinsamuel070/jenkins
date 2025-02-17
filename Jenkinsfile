@@ -39,7 +39,7 @@ pipeline {
                 }
             }
             steps{
-                docker build -t melvinsamuel070/jenkins .
+                sh "docker build -t melvinsamuel070/jenkins ."
         
                 script {
                     try {
