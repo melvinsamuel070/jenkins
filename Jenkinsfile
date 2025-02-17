@@ -137,7 +137,7 @@ pipeline {
         stage("Build") {
             when {
                 expression {
-                    env.BRANCH_NAME == "testing"  // ✅ Corrected BRANCH_NAME reference
+                    env.BRANCH_NAME == "testing"  
                 }
             }
             steps {
