@@ -66,7 +66,7 @@ pipeline {
             // PASSING BRANCH NAME AS A CONDITION
              when{
                  expression{
-                    BRANCH_NAME == "master."
+                    BRANCH_NAME == "testing."
                  }
              }
             steps {
