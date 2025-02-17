@@ -73,7 +73,7 @@ pipeline {
 
                     script {
                         def build_log = readFile("builder.log")
-                        emailext subject: "Everything works fine from here",
+                        emailext subject: "Everything works fine from her",
                         body: """
                                 This is the default body. ${env.JOB_NAME} - ${env.BUILD_NUMBER}, 
                                 ${env.BUILD_URL}
