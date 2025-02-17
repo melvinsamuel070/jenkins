@@ -45,34 +45,35 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            echo "This will always run"
-        }
+   post {
+    always {
+        echo "This will always run"
+    }
 
-        failure {
-            script {
-                def build_log = currentBuild.rawBuild.getLog(50).join("\n")
-                mail subject: "Build FAILED",
-                         body: """
-                             Build failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}
-                             URL: ${env.BUILD_URL}
-                             Logs:
-                             ${build_log}
-                         """,
-                      mail    to: 'melvinsamuel070@gmail.com',
-            }
-        }
-
-        success {
-            mail subject: "Build SUCCESS",
+    failure {
+        script {
+            def build_log = currentBuild.rawBuild.getLog(50).join("\n")
+            emailext subject: "Build FAILED",
                      body: """
-                         Build succeeded for ${env.JOB_NAME} #${env.BUILD_NUMBER}
+                         Build failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}
                          URL: ${env.BUILD_URL}
+                         Logs:
+                         ${build_log}
                      """,
-                      mail     to: 'melvinsamuel070@gmail.com',
+                     to: 'melvinsamuel070@gmail.com'
         }
     }
+
+    success {
+        emailext subject: "Build SUCCESS",
+                 body: """
+                     Build succeeded for ${env.JOB_NAME} #${env.BUILD_NUMBER}
+                     URL: ${env.BUILD_URL}
+                 """,
+                 to: 'melvinsamuel070@gmail.com'
+    }
+}
+
 }
 
 
