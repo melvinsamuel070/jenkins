@@ -188,8 +188,8 @@ pipeline {
                         // SSH into the EC2 instance and execute commands
                         sh """
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
-                                git clone https://github.com/melvinsamuel070/jenkins.git /home/ubuntu/jenkins &&
-                                cd /home/ubuntu/jenkins &&
+                                git clone https://github.com/melvinsamuel070/jenkins.git jenkins &&
+                                cd jenkins &&
                                 npm install &&
                                 npm run test | sudo tee builder.log
                             '
