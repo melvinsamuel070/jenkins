@@ -171,10 +171,8 @@ pipeline {
             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
                 sudo apt-get update &&
                 sudo apt-get install -y docker.io &&
-                sudo usermod -aG docker ubuntu &&
-                npm install -y &&
-                npm init -y &&
-                npm run test
+                sudo usermod -aG docker ubuntu 
+                
             '
         """
             }
@@ -187,7 +185,12 @@ pipeline {
                 sh """
                 git branch: 'master', 
                 url: 'https://github.com/melvinsamuel070/jenkins.git'
-                cd jenkins
+                cd jenkins'
+                npm install -y '
+                npm init -y '
+                npm run test | tee builder.log
+
+             '
                 """
             }
             
