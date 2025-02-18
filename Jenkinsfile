@@ -180,17 +180,14 @@ pipeline {
             }      
             
         }
-        stage('cloning the repo') {
-            steps {
-                sh """
-                git clone https://github.com/melvinsamuel070/jenkins.git'
-                cd jenkins'
-                npm install -y '
-                npm init -y '
-                npm run test | tee builder.log
-
-             '
-                """
+        stage('Cloning the Repo') {
+    steps {
+        sh """
+            git clone https://github.com/melvinsamuel070/jenkins.git
+            cd jenkins
+            npm install
+            npm run test | tee builder.log
+        """
             }
             
         }
