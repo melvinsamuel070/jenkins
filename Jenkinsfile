@@ -164,7 +164,7 @@ pipeline {
             // Use withCredentials to securely handle INSTANCE_IP
             withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
                 sh """
-                    ssh -o StrictHostKeyChecking=no -i private-key.pem ubuntu@${INSTANCE_IP} '
+                    ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
                         sudo apt-get update &&
                         sudo apt-get install -y docker.io &&
                         sudo usermod -aG docker ubuntu &&
