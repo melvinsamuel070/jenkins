@@ -130,6 +130,8 @@ pipeline {
             // //     }
             // }
             steps {
+                sh "sudo usermod -aG docker jenkins"
+
                 sh 'docker build -t melvinsamuel070/jenkins .'
 
                 script {
