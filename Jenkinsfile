@@ -124,11 +124,11 @@ pipeline {
         }
 
         stage('Building') {
-            when {
-                expression {
-                    BRANCH_NAME == 'testing'
-                }
-            }
+            // // when {
+            // //     expression {
+            // //         BRANCH_NAME == 'testing'
+            // //     }
+            // }
             steps {
                 sh 'docker build -t melvinsamuel070/jenkins .'
 
