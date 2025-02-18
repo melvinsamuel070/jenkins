@@ -119,8 +119,8 @@ pipeline {
         stage('Login to DockerHub') {
             steps {
                 script {
-                    // sh "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | sudo -S usermod -aG docker jenkins"
+                    sh "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
+                    // sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | sudo -S usermod -aG docker jenkins"
 
                 }
             }
