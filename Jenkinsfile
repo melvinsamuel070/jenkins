@@ -96,6 +96,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         EC2_SSH_KEY = credentials('ec2-ssh-key')
+        INSTANCE_IP = credentials('ec2-instance-ip')
     }
 
     tools {
