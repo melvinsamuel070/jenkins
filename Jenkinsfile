@@ -95,7 +95,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        EC2_SSH_KEY = credentials('ec2-ssh-key')
+        // EC2_SSH_KEY = credentials('ec2-ssh-key')
         // INSTANCE_IP = credentials('ec2-instance-ip')
     }
 
@@ -157,21 +157,25 @@ pipeline {
         stage('Deploying') {
     steps {
         script {
-            // Write the private key to a file
-            writeFile file: 'private_key', text: "${env.EC2_SSH_KEY}"
-            sh 'chmod 600 main-pro.pem'
+            // Use withCredentials to securely handle EC2_SSH_KEY and INSTANCE_IP
+    withCredentials([
+        sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY_FILE'),
+        string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')
+    ]) {
+        // Write the private key to a file
+        writeFile file: 'main-pro.pem', text: readFile("${env.SSH_KEY_FILE}")
+        sh 'chmod 400 main-pro.pem'
 
-            // Use withCredentials to securely handle INSTANCE_IP
-            withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
-                sh """
-                    ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
-                        sudo apt-get update &&
-                        sudo apt-get install -y docker.io &&
-                        sudo usermod -aG docker ubuntu &&
-                        npm init -y &&
-                        npm run test
-                    '
-                """
+        // SSH into the EC2 instance and execute commands
+        sh """
+            ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
+                sudo apt-get update &&
+                sudo apt-get install -y docker.io &&
+                sudo usermod -aG docker ubuntu &&
+                npm init -y &&
+                npm run test
+            '
+        """
             }
                 }
             }      
