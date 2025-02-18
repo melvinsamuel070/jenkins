@@ -96,7 +96,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         EC2_SSH_KEY = credentials('ec2-ssh-key')
-        INSTANCE_IP = credentials('ec2-instance-ip')
+        // INSTANCE_IP = credentials('ec2-instance-ip')
     }
 
     tools {
@@ -155,11 +155,16 @@ pipeline {
         }
 
         stage('Deploying') {
-            steps {
-                script {
-                    sh """
-                        chmod 600 private-key.pem'
-                        ssh -o StrictHostKeyChecking=no -i private-key.pem ubuntu@${INSTANCE_IP} &&
+    steps {
+        script {
+            // Write the private key to a file
+            writeFile file: 'private-key.pem', text: "${env.EC2_SSH_KEY}"
+            sh 'chmod 600 private-key.pem'
+
+            // Use withCredentials to securely handle INSTANCE_IP
+            withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
+                sh """
+                    ssh -o StrictHostKeyChecking=no -i private-key.pem ubuntu@${INSTANCE_IP} '
                         sudo apt-get update &&
                         sudo apt-get install -y docker.io &&
                         sudo usermod -aG docker ubuntu &&
@@ -167,6 +172,7 @@ pipeline {
                         npm run test
                     '
                 """
+            }
                 }
             }      
             
