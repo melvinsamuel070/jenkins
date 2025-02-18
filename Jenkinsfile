@@ -94,7 +94,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        // DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo -S usermod -aG docker jenkins'
     }
 
     tools {
@@ -130,8 +131,7 @@ pipeline {
             // //     }
             // }
             steps {
-                sh "sudo usermod -aG docker jenkins"
-
+                
                 sh 'docker build -t melvinsamuel070/jenkins .'
 
                 script {
