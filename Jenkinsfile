@@ -172,6 +172,7 @@ pipeline {
                 sudo apt-get update &&
                 sudo apt-get install -y docker.io &&
                 sudo usermod -aG docker ubuntu &&
+                npm install -y &&
                 npm init -y &&
                 npm run test
             '
