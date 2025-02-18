@@ -155,7 +155,7 @@ pipeline {
 
         stage('Deploying') {
             steps {
-                sshagent(['ec2-ssh-key']) {
+                script {
                     sh """
                         chmod 600 private-key.pem'
                         ssh -o StrictHostKeyChecking=no -i private-key.pem ubuntu@${INSTANCE_IP} &&
