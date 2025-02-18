@@ -92,9 +92,11 @@
 
 pipeline {
     agent any
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
+
     tools {
         nodejs 'node18'
     }
@@ -103,7 +105,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master', 
-                    url: 'https://github.com/melvinsamuel070/jenkins.git'
+                url: 'https://github.com/melvinsamuel070/jenkins.git'
             }
         }
 
@@ -144,7 +146,7 @@ pipeline {
 
         stage('Production') {
             steps {
-                echo 'This is for the production stage'
+                echo 'This is for the production stages'
             }
         }
     }
