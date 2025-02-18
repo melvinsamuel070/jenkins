@@ -171,7 +171,8 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
                                 sudo apt-get update &&
                                 sudo apt-get install -y docker.io nodejs npm &&
-                                sudo usermod -aG docker ubuntu
+                                sudo usermod -aG docker ubuntu 
+                                
                             '
                         """
             }
@@ -187,10 +188,10 @@ pipeline {
                         // SSH into the EC2 instance and execute commands
                         sh """
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
-                               sudo git clone https://github.com/melvinsamuel070/jenkins.git &&
-                                cd jenkins &&
-                               sudo npm install &&
-                              sudo  npm run test | tee builder.log
+                                git clone https://github.com/melvinsamuel070/jenkins.git /home/ubuntu/jenkins &&
+                                cd /home/ubuntu/jenkins &&
+                                npm install &&
+                                npm run test | sudo tee builder.log
                             '
                         """
                     }
