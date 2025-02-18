@@ -157,14 +157,14 @@ pipeline {
             steps {
                 sshagent(['ec2-ssh-key']) {
                     sh """
-                           chmod 600 private-key.pem'
-                           ssh -o StrictHostKeyChecking=no -i private-key.pem ubuntu@${INSTANCE_IP} &&
-                            sudo apt-get update &&
-                            sudo apt-get install -y docker.io &&
-                            sudo usermod -aG docker ubuntu &&
-                            npm init -y &&
-                            npm run test
-                        '
+                        chmod 600 private-key.pem'
+                        ssh -o StrictHostKeyChecking=no -i private-key.pem ubuntu@${INSTANCE_IP} &&
+                        sudo apt-get update &&
+                        sudo apt-get install -y docker.io &&
+                        sudo usermod -aG docker ubuntu &&
+                        npm init -y &&
+                        npm run test
+                    '
                 """
                 }
             }      
@@ -180,7 +180,6 @@ pipeline {
             }
             
         }
-        stage
     }
 
     post {
