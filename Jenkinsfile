@@ -127,7 +127,7 @@ pipeline {
         }
         stage('adding jenkins to docker group') {
             steps {
-                sh 'sudo usermod aG docker jenkins',
+                sh 'sudo usermod aG docker jenkins'
                 sh 'sudo systemctl restart jenkins'
 
             }
