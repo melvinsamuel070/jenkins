@@ -158,8 +158,8 @@ pipeline {
     steps {
         script {
             // Write the private key to a file
-            writeFile file: 'private-key.pem', text: "${env.EC2_SSH_KEY}"
-            sh 'chmod 600 private-key.pem'
+            writeFile file: 'main-pro.pem', text: "${env.EC2_SSH_KEY}"
+            sh 'chmod 600 main-pro.pem'
 
             // Use withCredentials to securely handle INSTANCE_IP
             withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
