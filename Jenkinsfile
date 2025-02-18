@@ -95,7 +95,6 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo -S usermod -aG docker jenkins'
     }
 
     tools {
@@ -120,18 +119,10 @@ pipeline {
             steps {
                 script {
                     sh "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
-                    // sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | sudo -S usermod -aG docker jenkins"
 
                 }
             }
         }
-        stage('adding jenkins to docker group') {
-            steps {
-                sh 'sudo /usr/sbin/usermod -aG docker jenkins'
-
-            }
-        }
-
         stage('Building') {
             // // when {
             // //     expression {
