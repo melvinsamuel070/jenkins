@@ -183,8 +183,7 @@ pipeline {
         stage('cloning the repo') {
             steps {
                 sh """
-                git branch: 'master', 
-                url: 'https://github.com/melvinsamuel070/jenkins.git'
+                git clone https://github.com/melvinsamuel070/jenkins.git'
                 cd jenkins'
                 npm install -y '
                 npm init -y '
