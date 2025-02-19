@@ -183,9 +183,9 @@ pipeline {
         stage('Cloning the Repo') {
             steps {
                 script {
-                    // Use withCredentials to securely handle INSTANCE_IP
-                    withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
-                        // SSH into the EC2 instance and execute commands
+                    // // Use withCredentials to securely handle INSTANCE_IP
+                    // withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
+                    //     // SSH into the EC2 instance and execute commands
                         sh """
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
                                 git clone https://github.com/melvinsamuel070/jenkins.git jenkins &&
