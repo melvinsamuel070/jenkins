@@ -102,12 +102,12 @@ pipeline {
     tools {
         nodejs 'node18'
     }
-    stages {
 
+    stages {
         stage('Checkout') {
             steps {
                 git branch: 'master', 
-                url: 'https://github.com/melvinsamuel070/jenkins.git'
+                    url: 'https://github.com/melvinsamuel070/jenkins.git'
             }
         }
 
@@ -121,20 +121,15 @@ pipeline {
             steps {
                 script {
                     sh """
-                       echo docker login -u \${DOCKERHUB_CREDENTIALS_USR} -p \${DOCKERHUB_CREDENTIALS_PSW} --password-stdin
+                        echo docker login -u \${DOCKERHUB_CREDENTIALS_USR} -p \${DOCKERHUB_CREDENTIALS_PSW} --password-stdin
                     """
                 }
             }
         }
+
         stage('Building') {
-            // // when {
-            // //     expression {
-            // //         BRANCH_NAME == 'testing'
-            // //     }
-            // }
             steps {
-                
-                sh 'docker build -t melvinsamuel070/jenkins .'
+                sh 'docker build -t melvinsamuel070/jenkins2 .'
 
                 script {
                     try {
@@ -150,55 +145,54 @@ pipeline {
 
         stage('Production') {
             steps {
-                echo 'This is for the production stages'
+                script {
+                    sh """
+                        docker pull melvinsamuel070/jenkins2:latest
+                        npm install
+                        npm run test
+                    """
+                }
             }
         }
 
+        /*
         stage('Deploying') {
-    steps {
-        script {
-           // Use withCredentials to securely handle EC2_SSH_KEY and INSTANCE_IP
+            steps {
+                script {
                     withCredentials([
                         sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY_FILE'),
                         string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')
                     ]) {
-                        // Write the private key to a file
                         writeFile file: 'main-pro.pem', text: readFile("${env.SSH_KEY_FILE}")
                         sh 'chmod 400 main-pro.pem'
 
-                        // SSH into the EC2 instance and execute commands
                         sh """
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
                                 sudo apt-get update &&
                                 sudo apt-get install -y docker.io nodejs npm &&
                                 sudo usermod -aG docker ubuntu 
-                                
-                            '
-                        """
-            }
-                }
-            }      
-            
-        }
-        stage('Cloning the Repo') {
-            steps {
-                script {
-                    // Use withCredentials to securely handle INSTANCE_IP
-                    withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
-                        // SSH into the EC2 instance and execute commands
-                        sh """
-                            ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
-                                git clone https://github.com/melvinsamuel070/jenkins.git jenkins &&
-                                cd jenkins &&
-                                npm install &&
-                                npm run test | sudo tee builder.log
                             '
                         """
                     }
                 }
             }
-            
         }
+
+        stage('Cloning the Repo') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
+                                git clone https://github.com/melvinsamuel070/jenkins.git jenkins &&
+                                cd jenkins
+                            '
+                        """
+                    }
+                }
+            }
+        }
+        */
     }
 
     post {
