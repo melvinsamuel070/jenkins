@@ -152,6 +152,7 @@ pipeline {
                     sh """
                         docker pull melvinsamuel070/jenkins2:latest
                         npm install
+                        npm update jest
                         npm install --save-dev jest
                         npm run test
                     """
