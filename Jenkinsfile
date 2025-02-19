@@ -1,94 +1,4 @@
 
-// pipeline {
-//     agent any
-//     tools {
-//         nodejs "node18"
-//     }
-//     stages {
-
-//         stage("Checkout out"){
-//             steps{
-//                 git branch: "master", 
-//                 url: "https://github.com/melvinsamuel070/jenkins.git"
-//             }
-//         }
-
-//         stage("starting"){
-//             steps{
-//                 echo "This is for the starting stage"
-//             }
-//         }
-
-
-//          stage("building"){
-//             when{
-//                 expression{
-//                     BRANCH_NAME == "testing"
-//                 }
-//             }
-//             steps{
-        
-//                 script {
-//                     try {
-
-//                         sh "npm run test | tee builder.log"
-
-//                     }catch(Exception err){
-//                         currentBuild.result = "FAILURE"
-//                         sh "echo ${err} | tee builder.log"
-//                         throw err
-//                     }
-//                 }
-//             }
-//         }
-
-//          stage("production"){
-//             steps{
-//                 echo "This is for the prduction stage"
-//             }
-//         }
-
-//     }
-
-//       post{
-//             failure{
-//                 script {
-//                     //def build_log = currentBuil.rawBuild.getLog(200).join("\n")
-//                     // def build_log = manager.build.log
-//                     def build_log = readFile("builder.log")
-//                     emailext subject: "Everything FAILED",
-//                             body: """
-//                                     This is the default body. ${env.JOB_NAME} - ${env.BUILD_NUMBER}, 
-//                                     ${env.BUILD_URL}
-//                                     ----------------
-//                                     ${build_log}
-//                                     """,
-//                             to: "melvinsamuel070@gmail.com"
-
-//                 }
-                
-//             }
-
-//              success{
-
-//                     script {
-//                         def build_log = readFile("builder.log")
-//                         emailext subject: "Everything works fine from her",
-//                         body: """
-//                                 This is the default body. ${env.JOB_NAME} - ${env.BUILD_NUMBER}, 
-//                                 ${env.BUILD_URL}
-//                                 ----------------
-//                                 ${build_log}
-//                                 """,
-//                         to: "melvinsamuel070@gmail.com"
-
-//                     }
-               
-                
-//             }
-//         }
-// }
-
 
 pipeline {
     agent any
@@ -155,6 +65,7 @@ pipeline {
                         npm update jest
                         npm install --save-dev jest
                         npm run test
+                        docker run -d -p 3004:8080 melvinsamuel070/jenkins2:latest
                     """
                 }
             }
