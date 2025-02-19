@@ -129,8 +129,11 @@ pipeline {
 
         stage('Building') {
             steps {
-                sh 'docker build -t melvinsamuel070/jenkins2 .'
+                sh """
+                  docker build -t melvinsamuel070/jenkins2 .
+                  docker push melvinsamuel070/jenkins2
 
+                """
                 script {
                     try {
                         sh 'npm run test | tee builder.log'
