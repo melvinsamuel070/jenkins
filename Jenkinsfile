@@ -1,7 +1,9 @@
 
 
 pipeline {
-    agent any
+    agent label{
+        jenkins_two="true"
+    }
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
@@ -70,7 +72,7 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage('Deploying') {
             steps {
                 script {
@@ -107,7 +109,7 @@ pipeline {
                 }
             }
         }
-        */
+        
     }
 
     post {
