@@ -1,9 +1,7 @@
 
 
 pipeline {
-    agent label{
-             jenkins_two = true
-    }
+    agent {label "jenkins_two"}
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
@@ -11,9 +9,9 @@ pipeline {
         // INSTANCE_IP = credentials('ec2-instance-ip')
     }
 
-    tools {
-        nodejs 'node18'
-    }
+    // tools {
+    //     nodejs 'node18'
+    // }
 
     stages {
         stage('Checkout') {
