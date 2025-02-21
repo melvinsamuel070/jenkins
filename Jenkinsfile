@@ -2,7 +2,7 @@
 
 pipeline {
     agent label{
-        jenkins_two="true"
+             jenkins_two = true
     }
 
     environment {
@@ -72,7 +72,7 @@ pipeline {
                 }
             }
         }
-        
+        /*
         stage('Deploying') {
             steps {
                 script {
@@ -109,7 +109,7 @@ pipeline {
                 }
             }
         }
-        
+        */
     }
 
     post {
