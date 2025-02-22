@@ -70,7 +70,7 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage('Deploying') {
             steps {
                 script {
@@ -107,7 +107,7 @@ pipeline {
                 }
             }
         }
-        */
+        
     }
 
     post {
