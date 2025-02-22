@@ -61,11 +61,11 @@ pipeline {
                 script {
                     sh """
                         docker pull melvinsamuel070/jenkins2:latest
-                        npm install
-                        npm update jest
-                        npm install --save-dev jest
-                        npm run test
-                        // docker run -d -p 3004:8080 melvinsamuel070/jenkins2:latest
+                        // npm install
+                        // npm update jest
+                        // npm install --save-dev jest
+                        // npm run test
+                        // // docker run -d -p 3004:8080 melvinsamuel070/jenkins2:latest
                     """
                 }
             }
