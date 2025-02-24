@@ -65,7 +65,7 @@ pipeline {
                         npm update jest
                         npm install --save-dev jest
                         npm run test
-                        //docker run -d -p 3004:8080 melvinsamuel070/jenkins2:latest
+                        docker run -d -p 3004:8080 melvinsamuel070/jenkins2:latest
                     """
                 }
             }
@@ -85,7 +85,7 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
                                 sudo apt-get update &&
                                 sudo apt-get install -y docker.io nodejs npm &&
-                                sudo usermod -aG docker ubuntu -
+                                sudo usermod -aG docker ubuntu 
                             '
                         """
                     }
