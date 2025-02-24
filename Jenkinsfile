@@ -65,12 +65,11 @@ pipeline {
                         npm update jest
                         npm install --save-dev jest
                         npm run test
-                        docker run -d -p 3004:8080 melvinsamuel070/jenkins2:latest
                     """
                 }
             }
         }
-        /*
+        
         stage('Deploying') {
             steps {
                 script {
@@ -108,7 +107,7 @@ pipeline {
                 }
             }
         }
-        */
+        
     }
      
     post {
