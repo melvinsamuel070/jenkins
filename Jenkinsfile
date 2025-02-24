@@ -108,9 +108,9 @@ pipeline {
                     withCredentials([string(credentialsId: 'ec2-instance-ip', variable: 'INSTANCE_IP')]) {
                         sh """
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
-                                git clone https://github.com/melvinsamuel070/jenkins.git jenkins &&
+                                git clone https://github.com/melvinsamuel070/jenkins.git jenkins
                                 cd jenkins
-                                docker run -d -p 3004:8080 melvinsamuel070/jenkins2:latest
+                            
                             '
                         """
                     }
