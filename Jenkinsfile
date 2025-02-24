@@ -85,7 +85,7 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no -i main-pro.pem ubuntu@${INSTANCE_IP} '
                                 sudo apt-get update &&
                                 sudo apt-get install -y docker.io nodejs npm &&
-                                sudo usermod -aG docker ubuntu 
+                                sudo usermod -aG docker ubuntu -
                             '
                         """
                     }
