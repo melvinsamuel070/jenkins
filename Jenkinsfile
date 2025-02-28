@@ -3,15 +3,15 @@
 pipeline {
     agent {label 'agent'}
 
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        // EC2_SSH_KEY = credentials('ec2-ssh-key')
-        // INSTANCE_IP = credentials('ec2-instance-ip')
-    }
-
-    // tools {
-    //     nodejs 'node18'
+    // environment {
+    //     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    //     // EC2_SSH_KEY = credentials('ec2-ssh-key')
+    //     // INSTANCE_IP = credentials('ec2-instance-ip')
     // }
+
+    // // tools {
+    // //     nodejs 'node18'
+    // // }
 
     stages {
         stage('Checkout') {
