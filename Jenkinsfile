@@ -27,48 +27,48 @@ pipeline {
             }
         }
 
-        stage('Login to DockerHub') {
-            steps {
-                script {
-                    sh """
-                        echo docker login -u \${DOCKERHUB_CREDENTIALS_USR} -p \${DOCKERHUB_CREDENTIALS_PSW} --password-stdin
-                    """
-                }
-            }
-        }
+        // stage('Login to DockerHub') {
+        //     steps {
+        //         script {
+        //             sh """
+        //                 echo docker login -u \${DOCKERHUB_CREDENTIALS_USR} -p \${DOCKERHUB_CREDENTIALS_PSW} --password-stdin
+        //             """
+        //         }
+        //     }
+        // }
 
-        stage('Building') {
-            steps {
-                sh """
-                  docker build -t melvinsamuel070/jenkins2 .
-                  docker push melvinsamuel070/jenkins2
+        // stage('Building') {
+        //     steps {
+        //         sh """
+        //           docker build -t melvinsamuel070/jenkins2 .
+        //           docker push melvinsamuel070/jenkins2
 
-                """
-                script {
-                    try {
-                        sh 'npm run test | tee builder.log'
-                    } catch (Exception err) {
-                        currentBuild.result = 'FAILURE'
-                        sh "echo ${err} | tee builder.log"
-                        throw err
-                    }
-                }
-            }
-        }
+        //         """
+        //         script {
+        //             try {
+        //                 sh 'npm run test | tee builder.log'
+        //             } catch (Exception err) {
+        //                 currentBuild.result = 'FAILURE'
+        //                 sh "echo ${err} | tee builder.log"
+        //                 throw err
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Production') {
-            steps {
-                script {
-                    sh """
-                        docker pull melvinsamuel070/jenkins2:latest
-                        npm install
-                        npm update jest
-                        npm install --save-dev jest
-                        npm run test
-                    """
-                }
-            }
-        }
+        // stage('Production') {
+        //     steps {
+        //         script {
+        //             sh """
+        //                 docker pull melvinsamuel070/jenkins2:latest
+        //                 npm install
+        //                 npm update jest
+        //                 npm install --save-dev jest
+        //                 npm run test
+        //             """
+        //         }
+        //     }
+        // }
         /*
         stage('Deploying') {
             steps {
